@@ -8,7 +8,7 @@ export function getToken(): string | null {
   return localStorage.getItem('token');
 }
 
-export function decodeToken(): { sub: string; email: string } | null {
+export function decodeToken(): { sub: string } | null {
   const token = getToken();
   if (!token) return null;
 

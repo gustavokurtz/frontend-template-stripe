@@ -9,6 +9,10 @@ export default function SuccessPage() {
   const [status, setStatus] = useState<'verificando' | 'pago' | 'nao_pago'>('verificando');
   const router = useRouter();
 
+  const handleDashboard = () => {
+    router.replace('/dashboard')
+  }
+
   useEffect(() => {
     const token = getToken();
     if (!token) return router.replace('/login');
@@ -29,6 +33,7 @@ export default function SuccessPage() {
     <div className="p-6">
       <h1 className="text-2xl font-bold text-green-600">✅ Pagamento confirmado!</h1>
       <p>Você agora tem acesso ao conteúdo premium 🎉</p>
+      <button onClick={handleDashboard}>Ir para conteudo premium</button>
     </div>
   ) : (
     <div className="p-6">
@@ -36,4 +41,6 @@ export default function SuccessPage() {
       <p>Você ainda não completou o pagamento. Tente novamente em /checkout</p>
     </div>
   );
+
+
 }

@@ -13,6 +13,10 @@ export default function RegisterPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleLogin = () => {
+    router.replace('/login')
+  }
+
   const register = async () => {
     const res = await axios.post('http://localhost:3000/auth/register', form);
     saveToken(res.data.token);
@@ -45,6 +49,10 @@ export default function RegisterPage() {
       <button onClick={register} className="bg-blue-500 text-white w-full p-2 rounded">
         Criar conta
       </button>
+      <div>
+        <h3>Voce já tem conta?</h3>
+      <button onClick={handleLogin}>Faça login</button>
+      </div>
     </div>
   );
 }

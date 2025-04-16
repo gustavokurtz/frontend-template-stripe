@@ -16,8 +16,24 @@ export default function LoginPage() {
       password,
     });
   
-    saveToken(res.data.token);
-    router.replace('/welcome'); // nova rota sem proteção
+    const token = res.data.token;
+    saveToken(token);
+  
+    // agora vamos consultar /auth/me
+    try {
+      const userRes = await axios.get('http://localhost:3000/auth/me', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+  
+      if (userRes.data.isPaid) {
+        router.replace('/dashboard'); // já pagou, vai pro premium
+      } else {
+        router.replace('/welcome'); // ainda não pagou, vai pro início
+      }
+    } catch (err) {
+      console.error('Erro ao verificar usuário:', err);
+      router.replace('/login'); // fallback em caso de erro
+    }
   };
 
   const RollBackRegister = () => {
